@@ -36,6 +36,13 @@ contract('SmartMatrixForsage', ([owner, alice, bob, max, jhon,...accounts]) => {
 
             const userExists = await smartMatrixForsage.isUserExists(alice)
             assert.equal(userExists, true);
+
+            const addressReferred3x = await smartMatrixForsage.findFreeX3Referrer(alice, 1)
+            assert.equal(addressReferred3x, owner);
+
+            const addressReferred6x = await smartMatrixForsage.findFreeX6Referrer(alice, 1)
+            assert.equal(addressReferred6x, owner);
+
         })
     })
 
@@ -46,6 +53,13 @@ contract('SmartMatrixForsage', ([owner, alice, bob, max, jhon,...accounts]) => {
 
             const userExists = await smartMatrixForsage.isUserExists(bob)
             assert.equal(userExists, true);
+
+            const addressReferred3x = await smartMatrixForsage.findFreeX3Referrer(bob, 1)
+            assert.equal(addressReferred3x, alice);
+
+            const addressReferred6x = await smartMatrixForsage.findFreeX6Referrer(bob, 1)
+            assert.equal(addressReferred6x, alice);
+
         })
     })
 
@@ -58,6 +72,13 @@ contract('SmartMatrixForsage', ([owner, alice, bob, max, jhon,...accounts]) => {
 
             const userExists = await smartMatrixForsage.isUserExists(max)
             assert.equal(userExists, true);
+
+            const addressReferred3x = await smartMatrixForsage.findFreeX3Referrer(max, 1)
+            assert.equal(addressReferred3x, owner);
+
+            const addressReferred6x = await smartMatrixForsage.findFreeX6Referrer(max, 1)
+            assert.equal(addressReferred6x, owner);
+
         })
     })
 
@@ -71,9 +92,16 @@ contract('SmartMatrixForsage', ([owner, alice, bob, max, jhon,...accounts]) => {
 
             const userExists = await smartMatrixForsage.isUserExists(jhon)
             assert.equal(userExists, true);
+
+            const addressReferred3x = await smartMatrixForsage.findFreeX3Referrer(jhon, 1)
+            assert.equal(addressReferred3x, max);
+
+            const addressReferred6x = await smartMatrixForsage.findFreeX6Referrer(jhon, 1)
+            assert.equal(addressReferred6x, max);
+
+
         })
     })
 
-    //buyNewLevel
 
 });
