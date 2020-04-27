@@ -7,15 +7,24 @@
     "test": "test"
   },
   "dependencies": {
+    "@openzeppelin/test-helpers": "^0.5.5",
+    "@truffle/hdwallet-provider": "^1.0.34",
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
     "dotenv": "^8.2.0",
     "truffle-security": "^1.7.1",
     "web3": "^1.2.7"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "@codechecks/client": "^0.1.10",
+    "coveralls": "^3.1.0",
+    "eth-gas-reporter": "^0.2.17",
+    "istanbul": "^0.4.5",
+    "solidity-coverage": "^0.7.4"
+  },
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "cover": "istanbul cover _mocha"
   },
   "repository": {
     "type": "git",

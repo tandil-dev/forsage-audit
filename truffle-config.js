@@ -28,6 +28,9 @@ const fs = require('fs');
 const mnemonic = fs.readFileSync(".secret").toString().trim();
 
 module.exports = {
+
+  plugins: ["truffle-security", "solidity-coverage"],
+
   /**
    * Networks define how you connect to your ethereum client and let you set the
    * defaults web3 uses to send transactions. If you don't specify one truffle
@@ -82,8 +85,11 @@ module.exports = {
   },
 
   // Set default mocha options here, use special reporters etc.
+
   mocha: {
-    // timeout: 100000
+    // timeout: 100000	    
+    reporter: 'eth-gas-reporter',
+    reporterOptions: { currency: 'USD' }
   },
 
   // Configure your compilers

@@ -12,6 +12,7 @@ contract('SmartMatrixForsage', ([owner, alice, bob, max, jhon,...accounts]) => {
     before(async () => {
         smartMatrixForsage = await SmartMatrixForsage.deployed();
     })
+    
     describe('Deployment', async () => {
         it('Deploys successfully', async () => {
             const address = smartMatrixForsage.address;
@@ -102,6 +103,47 @@ contract('SmartMatrixForsage', ([owner, alice, bob, max, jhon,...accounts]) => {
 
         })
     })
+
+    describe('Print public var', async () => {
+        it('Print public var', async () => {
+
+            const address = smartMatrixForsage.address;
+
+            // console.log()
+            // console.log (await (smartMatrixForsage.users(alice) )
+            // console.log()
+            // console.log(await (smartMatrixForsage.usersX3Matrix(alice, 1) )
+            
+        })
+    })
+
+
+    //{ from: accounts[0], gas: 50000, gasPrice: 1e6 }
+
+    // describe('Buy New Level', async () => {
+    //     it('', async () => {
+
+
+    //         const address = smartMatrixForsage.address;
+    //         const amount = '0.05';
+
+    //         //await smartMatrixForsage.sendTransaction({ from: jhon, data: max, gasLimit: 6721975, to: address, value: web3.utils.toWei(amount, "ether") })
+
+    //         //matrix == 1 || matrix == 2
+    //         //msg.value == levelPrice[level]
+    //         //level > 1 && level <= LAST_LEVEL
+
+    //         // levelPrice[1] = 0.025 ether;
+    //         // for (uint8 i = 2; i <= LAST_LEVEL; i++) {
+    //         //     levelPrice[i] = levelPrice[i - 1] * 2;
+    //         // }
+    //         await smartMatrixForsage.buyNewLevel({ from: jhon, gasLimit: 6721975, to: address, value: web3.utils.toWei(amount, "ether") })
+
+
+    //         const userExists = await smartMatrixForsage.isUserExists(jhon)
+    //         assert.equal(userExists, true);
+    //     })
+    // })
 
 
 });
