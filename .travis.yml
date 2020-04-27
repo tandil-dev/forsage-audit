@@ -9,6 +9,5 @@ install:
 script:
   - ganache-cli -p 8545 > /dev/null &
   - sleep 5
-  - npm test
-  - npx truffle run coverage
-  - cat coverage/lcov.info | coveralls
+  - truffle test
+  - truffle run coverage
