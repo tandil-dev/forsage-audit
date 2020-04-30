@@ -99,6 +99,7 @@ module.exports = {
   // Set default mocha options here, use special reporters etc.
 
   mocha: {
+    enableTimeouts: false,
     // timeout: 100000	    
     reporter: 'eth-gas-reporter',
     reporterOptions: { currency: 'USD' }

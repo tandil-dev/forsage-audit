@@ -40,6 +40,13 @@ contract('SmartMatrixForsage', ([owner, alice, bob, max, jhon,...accounts]) => {
     })
 
     describe('Register New User referred by owner', async () => {
+        it('With invalid price. Expect to throw', async () => {
+            await expectRevert(
+                smartMatrixForsage.registrationExt(owner, { from: alice }),
+                'registration cost 0.05'
+            );
+        });
+        
         it('New user registered successfully', async () => {
             
             console.log(" ANTES-------------------------------------------------")
@@ -389,7 +396,35 @@ contract('SmartMatrixForsage', ([owner, alice, bob, max, jhon,...accounts]) => {
         })
     })
 
-    describe.only('Check Deep Gas Cost ', async () => {
+    describe('Buy New Levels', async () => {
+        it('Matrix x3', async () => {
+            const amount = '0.05';
+
+            let isUserActiveX3Level = await smartMatrixForsage.usersActiveX3Levels(alice, 2)
+            assert.equal(isUserActiveX3Level, false)
+            
+            await smartMatrixForsage.buyNewLevel(1, 2, { from: alice, value: web3.utils.toWei(amount, "ether")} )
+            
+            isUserActiveX3Level = await smartMatrixForsage.usersActiveX3Levels(alice, 2)
+            assert.equal(isUserActiveX3Level, true)
+
+        })
+
+        it('Matrix x6', async () => {
+            const amount = '0.05';
+
+            let isUserActiveX6Level = await smartMatrixForsage.usersActiveX6Levels(alice, 2)
+            assert.equal(isUserActiveX6Level, false)
+            
+            await smartMatrixForsage.buyNewLevel(2, 2, { from: alice, value: web3.utils.toWei(amount, "ether")} )
+            
+            isUserActiveX6Level = await smartMatrixForsage.usersActiveX6Levels(alice, 2)
+            assert.equal(isUserActiveX6Level, true)
+
+        })
+    })
+
+    describe('Check Deep Gas Cost ', async () => {
         it('Gast Cost ', async () => {
 
             const address = smartMatrixForsage.address;
@@ -409,28 +444,11 @@ contract('SmartMatrixForsage', ([owner, alice, bob, max, jhon,...accounts]) => {
             }
             await smartMatrixForsage.buyNewLevel(1, 2, { from: accounts[0], value: web3.utils.toWei(amount, "ether") })
             await smartMatrixForsage.buyNewLevel(1, 2, { from: accounts[accounts.length-1], value: web3.utils.toWei(amount, "ether") })
-            //ganache-cli --accounts 9999999 --mnemonic "much glory behind wash easily party river stamp first magic need giant"
- 
-        })
-    })
-
-    describe('Buy New Level', async () => {
-        it('', async () => {
-            const address = smartMatrixForsage.address;
-            const amount = '0.05';
-
-            let isUserActiveX3Level = await smartMatrixForsage.usersActiveX3Levels(alice, 2)
-            assert.equal(isUserActiveX3Level, false)
-            
-            await smartMatrixForsage.buyNewLevel(1, 2, { from: alice, value: web3.utils.toWei(amount, "ether")} )
-            
-            isUserActiveX3Level = await smartMatrixForsage.usersActiveX3Levels(alice, 2)
-            console.log("level 2: " + isUserActiveX3Level)
-            assert.equal(isUserActiveX3Level, true)
+            await smartMatrixForsage.buyNewLevel(2, 2, { from: accounts[0], value: web3.utils.toWei(amount, "ether") })
+            await smartMatrixForsage.buyNewLevel(2, 2, { from: accounts[accounts.length-1], value: web3.utils.toWei(amount, "ether") })
 
         })
     })
-
 
 });
 
@@ -455,3 +473,14 @@ contract('SmartMatrixForsage', ([owner, alice, bob, max, jhon,...accounts]) => {
 
 // cuando se renueva cada matrix se cobra del usuario
 // el gas se cobra al ultimo en registrarse
+
+
+/** Pruebas de mati
+ *  Transaction: 0x02ab9c3f9cb0b8dd52a7746d37929bbb771808ead6f6e9587a3f977d86039698
+  Gas usage: 6721975
+  Block Number: 10002
+  Block Time: Wed Apr 29 2020 23:08:27 GMT-0300 (Argentina Standard Time)
+  Runtime Error: out of gas
+
+
+ */
