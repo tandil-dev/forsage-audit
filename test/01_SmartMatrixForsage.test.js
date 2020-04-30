@@ -1,6 +1,6 @@
 const SmartMatrixForsage = artifacts.require('SmartMatrixForsage.sol');
 const { expectEvent, expectRevert } = require('@openzeppelin/test-helpers');
-const Web3 = require("web3");
+//const web3 = require("web3");
 
 require('chai')
     .use(require('chai-as-promised'))
@@ -11,6 +11,7 @@ contract('SmartMatrixForsage', ([owner, alice, bob, max, jhon,...accounts]) => {
 
     before(async () => {
         smartMatrixForsage = await SmartMatrixForsage.deployed();
+
     })
     
     describe('Deployment', async () => {
@@ -41,11 +42,19 @@ contract('SmartMatrixForsage', ([owner, alice, bob, max, jhon,...accounts]) => {
     describe('Register New User referred by owner', async () => {
         it('New user registered successfully', async () => {
             
+            console.log(" ANTES-------------------------------------------------")
+            console.log(await web3.eth.getBalance(alice))
+
             await smartMatrixForsage.registrationExt(owner, { from: alice, value: 50000000000000000 })
+
+            console.log(" DESPUES-------------------------------------------------")
+            console.log(await web3.eth.getBalance(alice))
 
             const userExists = await smartMatrixForsage.isUserExists(alice)
             assert.equal(userExists, true);
             console.log(`alice: ${alice}`)
+
+
 
             const isUserActiveX3Level = await smartMatrixForsage.usersActiveX3Levels(alice, 1)
             assert.equal(isUserActiveX3Level, true)
@@ -78,7 +87,6 @@ contract('SmartMatrixForsage', ([owner, alice, bob, max, jhon,...accounts]) => {
             const isUserActiveX6Level = await smartMatrixForsage.usersActiveX6Levels(bob, 1)
             assert.equal(isUserActiveX6Level, true)
 
-
             const addressReferred3x = await smartMatrixForsage.findFreeX3Referrer(bob, 1)
             assert.equal(addressReferred3x, alice);
 
@@ -94,7 +102,6 @@ contract('SmartMatrixForsage', ([owner, alice, bob, max, jhon,...accounts]) => {
             const address = smartMatrixForsage.address;
             const amount = '0.05';
             await smartMatrixForsage.sendTransaction({ from: max, gasLimit: 6721975, to: address, value: web3.utils.toWei(amount, "ether") })
-
             const userExists = await smartMatrixForsage.isUserExists(max)
             assert.equal(userExists, true);
             console.log(`max: ${max}`)
@@ -104,7 +111,6 @@ contract('SmartMatrixForsage', ([owner, alice, bob, max, jhon,...accounts]) => {
 
             const isUserActiveX6Level = await smartMatrixForsage.usersActiveX6Levels(max, 1)
             assert.equal(isUserActiveX6Level, true)
-
 
             const addressReferred3x = await smartMatrixForsage.findFreeX3Referrer(max, 1)
             assert.equal(addressReferred3x, owner);
@@ -138,60 +144,273 @@ contract('SmartMatrixForsage', ([owner, alice, bob, max, jhon,...accounts]) => {
             const addressReferred6x = await smartMatrixForsage.findFreeX6Referrer(jhon, 1)
             assert.equal(addressReferred6x, alice);
 
-            console.log(accounts)
-            await smartMatrixForsage.sendTransaction({ from: accounts[0], data: alice, gasLimit: 6721975, to: address, value: web3.utils.toWei(amount, "ether") })
-            await smartMatrixForsage.sendTransaction({ from: accounts[1], data: alice, gasLimit: 6721975, to: address, value: web3.utils.toWei(amount, "ether") })
-            await smartMatrixForsage.sendTransaction({ from: accounts[2], data: alice, gasLimit: 6721975, to: address, value: web3.utils.toWei(amount, "ether") })
-            await smartMatrixForsage.sendTransaction({ from: accounts[3], data: alice, gasLimit: 6721975, to: address, value: web3.utils.toWei(amount, "ether") })
-            await smartMatrixForsage.sendTransaction({ from: accounts[4], data: alice, gasLimit: 6721975, to: address, value: web3.utils.toWei(amount, "ether") })
+        })
+    })
 
+    describe('Check Owner Matrix overflow', async () => {
+        it('Check Owner Matrix overflow', async () => {
+
+            const address = smartMatrixForsage.address;
+            const amount = '0.05';
+
+            console.log("is User Active 0 :")
+            let isUserActiveX3Level = await smartMatrixForsage.usersActiveX3Levels(owner, 1)
+            assert.equal(isUserActiveX3Level, true)
+            let isUserActiveX6Level = await smartMatrixForsage.usersActiveX6Levels(owner, 1)
+            assert.equal(isUserActiveX6Level, true)
+            let usersX3Matrix = await smartMatrixForsage.usersX3Matrix(owner, 1)
+            // console.log(`Owner X3 matrix:`)
+            // console.log(usersX3Matrix)
+            // let usersX6Matrix = await smartMatrixForsage.usersX6Matrix(owner, 1)
+            // console.log(`Owner X6 matrix:`)
+            // console.log(usersX6Matrix)
+
+            //------------------------------------------------------------------ registration
+            await smartMatrixForsage.sendTransaction({ from: accounts[5], data: owner, gasLimit: 6721975, to: address, value: web3.utils.toWei(amount, "ether") })
+            let userExists = await smartMatrixForsage.isUserExists(accounts[5])
+            assert.equal(userExists, true);
+            
+            console.log("is User Active 1 :")
+            isUserActiveX3Level = await smartMatrixForsage.usersActiveX3Levels(owner, 1)
+            assert.equal(isUserActiveX3Level, true)
+            isUserActiveX6Level = await smartMatrixForsage.usersActiveX6Levels(owner, 1)
+            assert.equal(isUserActiveX6Level, true)
+            usersX3Matrix = await smartMatrixForsage.usersX3Matrix(owner, 1)
+            // console.log(`Owner X3 matrix:`)
+            // console.log(usersX3Matrix)
+            // usersX6Matrix = await smartMatrixForsage.usersX6Matrix(owner, 1)
+            // console.log(`Owner X6 matrix:`)
+            // console.log(usersX6Matrix)
+            
+            //------------------------------------------------------------------ registration
+            await smartMatrixForsage.sendTransaction({ from: accounts[6], data: owner, gasLimit: 6721975, to: address, value: web3.utils.toWei(amount, "ether") })
+            userExists = await smartMatrixForsage.isUserExists(accounts[6])
+            assert.equal(userExists, true);
+
+            //assert.equal(isUserActiveX3Level, true)
+            console.log("is User Active 2 :")
+            isUserActiveX3Level = await smartMatrixForsage.usersActiveX3Levels(owner, 1)
+            assert.equal(isUserActiveX3Level, true)
+            isUserActiveX6Level = await smartMatrixForsage.usersActiveX6Levels(owner, 1)
+            assert.equal(isUserActiveX6Level, true)
+            usersX3Matrix = await smartMatrixForsage.usersX3Matrix(owner, 1)
+            // console.log(`Owner X3 matrix:`)
+            // console.log(usersX3Matrix)
+            // usersX6Matrix = await smartMatrixForsage.usersX6Matrix(owner, 1)
+            // console.log(`Owner X6 matrix:`)
+            // console.log(usersX6Matrix)
+            
+            //------------------------------------------------------------------ registration
+            await smartMatrixForsage.sendTransaction({ from: accounts[7], data: owner, gasLimit: 6721975, to: address, value: web3.utils.toWei(amount, "ether") })
+            userExists = await smartMatrixForsage.isUserExists(accounts[7])
+            assert.equal(userExists, true);
+
+            console.log("is User Active 3 :")
+            isUserActiveX3Level = await smartMatrixForsage.usersActiveX3Levels(owner, 1)
+            assert.equal(isUserActiveX3Level, true)
+            isUserActiveX6Level = await smartMatrixForsage.usersActiveX6Levels(owner, 1)
+            assert.equal(isUserActiveX6Level, true)
+            usersX3Matrix = await smartMatrixForsage.usersX3Matrix(owner, 1)
+            // console.log(`Owner X3 matrix:`)
+            // console.log(usersX3Matrix)
+            // usersX6Matrix = await smartMatrixForsage.usersX6Matrix(owner, 1)
+            // console.log(`Owner X6 matrix:`)
+            // console.log(usersX6Matrix)
+
+            //------------------------------------------------------------------ registration
+            await smartMatrixForsage.sendTransaction({ from: accounts[8], data: owner, gasLimit: 6721975, to: address, value: web3.utils.toWei(amount, "ether") })
+            userExists = await smartMatrixForsage.isUserExists(accounts[8])
+            assert.equal(userExists, true);
+
+            console.log("is User Active 4 :")
+            isUserActiveX3Level = await smartMatrixForsage.usersActiveX3Levels(owner, 1)
+            assert.equal(isUserActiveX3Level, true)
+            isUserActiveX6Level = await smartMatrixForsage.usersActiveX6Levels(owner, 1)
+            assert.equal(isUserActiveX6Level, true)
+            usersX3Matrix = await smartMatrixForsage.usersX3Matrix(owner, 1)
+            // console.log(`Owner X3 matrix:`)
+            // console.log(usersX3Matrix)
+            // usersX6Matrix = await smartMatrixForsage.usersX6Matrix(owner, 1)
+            // console.log(`Owner X6 matrix:`)
+            // console.log(usersX6Matrix)
 
         })
     })
 
-    describe('Check Matrix ', async () => {
-        it('Check Matrix of the Owner', async () => {
+    describe('Check User Matrix overflow', async () => {
+        it('Check User Matrix ', async () => {
+
+            const address = smartMatrixForsage.address;
+            const amount = '0.05';
+
+            console.log("is User Active 0 :")
             
-            let usersX3Matrix = await smartMatrixForsage.usersX3Matrix(owner, 1)
-            console.log(`Owner matrix:`)
-            console.log( usersX3Matrix)
-
-            usersX3Matrix = await smartMatrixForsage.usersX3Matrix(alice, 1)
-            console.log(`Alice matrix:`)
+            let isUserActiveX3Level = await smartMatrixForsage.usersActiveX3Levels(alice, 1)
+            console.log(isUserActiveX3Level)
+            let isUserActiveX6Level = await smartMatrixForsage.usersActiveX6Levels(alice, 1)
+            console.log(isUserActiveX6Level)
+            let usersX3Matrix = await smartMatrixForsage.usersX3Matrix(alice, 1)
+            console.log(`Owner X3 matrix:`)
             console.log(usersX3Matrix)
-
-            usersX3Matrix = await smartMatrixForsage.usersX3Matrix(bob, 1)
-            console.log(`Bob matrix:`)
-            console.log( usersX3Matrix)
-
-            usersX3Matrix = await smartMatrixForsage.usersX3Matrix(max, 1)
-            console.log(`Max matrix:`)
-            console.log( usersX3Matrix)
-
-            usersX3Matrix = await smartMatrixForsage.usersX3Matrix(jhon, 1)
-            console.log(`Jhon matrix:`)
-            console.log( usersX3Matrix)
-
-            let usersX6Matrix = await smartMatrixForsage.usersX6Matrix(owner, 1)
-            console.log(`Owner matrix:`)
-            console.log( usersX6Matrix)
-
-            usersX6Matrix = await smartMatrixForsage.usersX6Matrix(alice, 1)
-            console.log(`Alice matrix:`)
+            let usersX6Matrix = await smartMatrixForsage.usersX6Matrix(alice, 1)
+            console.log(`Owner X6 matrix:`)
             console.log(usersX6Matrix)
 
-            usersX6Matrix = await smartMatrixForsage.usersX6Matrix(bob, 1)
-            console.log(`Bob matrix:`)
-            console.log( usersX6Matrix)
+            //------------------------------------------------------------------ registration
+            await smartMatrixForsage.sendTransaction({ from: accounts[9], data: alice, gasLimit: 6721975, to: address, value: web3.utils.toWei(amount, "ether") })
+            let userExists = await smartMatrixForsage.isUserExists(accounts[9])
+            assert.equal(userExists, true);
+            
+            //assert.equal(isUserActiveX3Level, true)
+            console.log("is User Active 1 :")
+            console.log(" -------------------------------------------------")
+            console.log(await web3.eth.getBalance(alice))
 
-            usersX6Matrix = await smartMatrixForsage.usersX6Matrix(max, 1)
-            console.log(`Max matrix:`)
-            console.log( usersX6Matrix)
+            isUserActiveX3Level = await smartMatrixForsage.usersActiveX3Levels(alice, 1)
+            console.log(isUserActiveX3Level)
+            isUserActiveX6Level = await smartMatrixForsage.usersActiveX6Levels(alice, 1)
+            console.log(isUserActiveX6Level)
+            usersX3Matrix = await smartMatrixForsage.usersX3Matrix(alice, 1)
+            console.log(`Owner X3 matrix:`)
+            console.log(usersX3Matrix)
+            usersX6Matrix = await smartMatrixForsage.usersX6Matrix(alice, 1)
+            console.log(`Owner X6 matrix:`)
+            console.log(usersX6Matrix)
+            
+            //------------------------------------------------------------------ registration
+            await smartMatrixForsage.sendTransaction({ from: accounts[10], data: alice, gasLimit: 6721975, to: address, value: web3.utils.toWei(amount, "ether") })
+            userExists = await smartMatrixForsage.isUserExists(accounts[10])
+            assert.equal(userExists, true);
 
-            usersX6Matrix = await smartMatrixForsage.usersX6Matrix(jhon, 1)
-            console.log(`Jhon matrix:`)
-            console.log( usersX6Matrix)
+            //assert.equal(isUserActiveX3Level, true)
+            console.log("is User Active 2 :")
+            console.log(" -------------------------------------------------")
+            console.log(await web3.eth.getBalance(alice))
 
+
+            isUserActiveX3Level = await smartMatrixForsage.usersActiveX3Levels(alice, 1)
+            console.log(isUserActiveX3Level)
+            isUserActiveX6Level = await smartMatrixForsage.usersActiveX6Levels(alice, 1)
+            console.log(isUserActiveX6Level)
+            usersX3Matrix = await smartMatrixForsage.usersX3Matrix(alice, 1)
+            console.log(`Owner X3 matrix:`)
+            console.log(usersX3Matrix)
+            usersX6Matrix = await smartMatrixForsage.usersX6Matrix(alice, 1)
+            console.log(`Owner X6 matrix:`)
+            console.log(usersX6Matrix)
+            
+            //------------------------------------------------------------------ registration
+            await smartMatrixForsage.sendTransaction({ from: accounts[11], data: alice, gasLimit: 6721975, to: address, value: web3.utils.toWei(amount, "ether") })
+            userExists = await smartMatrixForsage.isUserExists(accounts[11])
+            assert.equal(userExists, true);
+
+            //assert.equal(isUserActiveX3Level, true)
+            console.log("is User Active 3 :")
+            console.log(" -------------------------------------------------")
+            console.log(await web3.eth.getBalance(alice))
+
+            isUserActiveX3Level = await smartMatrixForsage.usersActiveX3Levels(alice, 1)
+            console.log(isUserActiveX3Level)
+            isUserActiveX6Level = await smartMatrixForsage.usersActiveX6Levels(alice, 1)
+            console.log(isUserActiveX6Level)
+            usersX3Matrix = await smartMatrixForsage.usersX3Matrix(alice, 1)
+            console.log(`Owner X3 matrix:`)
+            console.log(usersX3Matrix)
+            usersX6Matrix = await smartMatrixForsage.usersX6Matrix(alice, 1)
+            console.log(`Owner X6 matrix:`)
+            console.log(usersX6Matrix)
+
+            //------------------------------------------------------------------ registration
+            await smartMatrixForsage.sendTransaction({ from: accounts[12], data: alice, gasLimit: 6721975, to: address, value: web3.utils.toWei(amount, "ether") })
+            userExists = await smartMatrixForsage.isUserExists(accounts[12])
+            assert.equal(userExists, true);
+
+            //assert.equal(isUserActiveX3Level, true)
+            console.log("is User Active 4 :")
+            console.log(" -------------------------------------------------")
+            console.log(await web3.eth.getBalance(alice))
+
+
+            isUserActiveX3Level = await smartMatrixForsage.usersActiveX3Levels(alice, 1)
+            console.log(isUserActiveX3Level)
+            isUserActiveX6Level = await smartMatrixForsage.usersActiveX6Levels(alice, 1)
+            console.log(isUserActiveX6Level)
+            usersX3Matrix = await smartMatrixForsage.usersX3Matrix(alice, 1)
+            console.log(`Owner X3 matrix:`)
+            console.log(usersX3Matrix)
+            usersX6Matrix = await smartMatrixForsage.usersX6Matrix(alice, 1)
+            console.log(`Owner X6 matrix:`)
+            console.log(usersX6Matrix)
+
+            //------------------------------------------------------------------ registration
+            await smartMatrixForsage.sendTransaction({ from: accounts[13], data: alice, gasLimit: 6721975, to: address, value: web3.utils.toWei(amount, "ether") })
+            userExists = await smartMatrixForsage.isUserExists(accounts[13])
+            assert.equal(userExists, true);
+
+            //assert.equal(isUserActiveX3Level, true)
+            console.log("is User Active 5 :")
+            console.log(" -------------------------------------------------")
+            console.log(await web3.eth.getBalance(alice))
+
+
+            isUserActiveX3Level = await smartMatrixForsage.usersActiveX3Levels(alice, 1)
+            console.log(isUserActiveX3Level)
+            isUserActiveX6Level = await smartMatrixForsage.usersActiveX6Levels(alice, 1)
+            console.log(isUserActiveX6Level)
+            usersX3Matrix = await smartMatrixForsage.usersX3Matrix(alice, 1)
+            console.log(`Owner X3 matrix:`)
+            console.log(usersX3Matrix)
+            usersX6Matrix = await smartMatrixForsage.usersX6Matrix(alice, 1)
+            console.log(`Owner X6 matrix:`)
+            console.log(usersX6Matrix)
+
+            //------------------------------------------------------------------ registration
+            await smartMatrixForsage.sendTransaction({ from: accounts[14], data: alice, gasLimit: 6721975, to: address, value: web3.utils.toWei(amount, "ether") })
+            userExists = await smartMatrixForsage.isUserExists(accounts[14])
+            assert.equal(userExists, true);
+
+            //assert.equal(isUserActiveX3Level, true)
+            console.log("is User Active 6 :")
+            console.log(" -------------------------------------------------")
+            console.log(await web3.eth.getBalance(alice))
+
+
+            isUserActiveX3Level = await smartMatrixForsage.usersActiveX3Levels(alice, 1)
+            console.log(isUserActiveX3Level)
+            isUserActiveX6Level = await smartMatrixForsage.usersActiveX6Levels(alice, 1)
+            console.log(isUserActiveX6Level)
+            usersX3Matrix = await smartMatrixForsage.usersX3Matrix(alice, 1)
+            console.log(`Owner X3 matrix:`)
+            console.log(usersX3Matrix)
+            usersX6Matrix = await smartMatrixForsage.usersX6Matrix(alice, 1)
+            console.log(`Owner X6 matrix:`)
+            console.log(usersX6Matrix)
+
+        })
+    })
+
+    describe.only('Check Deep Gas Cost ', async () => {
+        it('Gast Cost ', async () => {
+
+            const address = smartMatrixForsage.address;
+            const amount = '0.05';
+            let userExists;
+
+            smartMatrixForsage = await SmartMatrixForsage.new(owner)
+            await smartMatrixForsage.registrationExt(owner, { from: accounts[0], value: 50000000000000000 })
+            
+            try{
+                for( let i= 1; i< accounts.length; i++ ) {
+                    await smartMatrixForsage.registrationExt(accounts[i-1], { from: accounts[i], value: 50000000000000000 })
+                    console.log(i)
+                }
+            } catch (e) {
+                //espect error ('out of gas .... ' )
+            }
+            await smartMatrixForsage.buyNewLevel(1, 2, { from: accounts[0], value: web3.utils.toWei(amount, "ether") })
+            await smartMatrixForsage.buyNewLevel(1, 2, { from: accounts[accounts.length-1], value: web3.utils.toWei(amount, "ether") })
+            //ganache-cli --accounts 9999999 --mnemonic "much glory behind wash easily party river stamp first magic need giant"
+ 
         })
     })
 
@@ -202,36 +421,37 @@ contract('SmartMatrixForsage', ([owner, alice, bob, max, jhon,...accounts]) => {
 
             let isUserActiveX3Level = await smartMatrixForsage.usersActiveX3Levels(alice, 2)
             assert.equal(isUserActiveX3Level, false)
-
+            
             await smartMatrixForsage.buyNewLevel(1, 2, { from: alice, value: web3.utils.toWei(amount, "ether")} )
             
             isUserActiveX3Level = await smartMatrixForsage.usersActiveX3Levels(alice, 2)
+            console.log("level 2: " + isUserActiveX3Level)
             assert.equal(isUserActiveX3Level, true)
 
-
-            //await smartMatrixForsage.sendTransaction({ from: jhon, data: max, gasLimit: 6721975, to: address, value: web3.utils.toWei(amount, "ether") })
-
-            //matrix == 1 || matrix == 2
-            //msg.value == levelPrice[level]
-            //level > 1 && level <= LAST_LEVEL
-
-            // levelPrice[1] = 0.025 ether;
-            // for (uint8 i = 2; i <= LAST_LEVEL; i++) {
-            //     levelPrice[i] = levelPrice[i - 1] * 2;
-            // }
-            //assert.equal(userExists, true);
         })
     })
 
-    // describe('Print public var', async () => {
-    //     it('Print public var', async () => {
-    //         const address = smartMatrixForsage.address;
-    //          console.log()
-    //          console.log (await (smartMatrixForsage.users(alice) )
-    //          console.log()
-    //          console.log(await (smartMatrixForsage.usersX3Matrix(alice, 1) )
-    //     })
-    // })
-
 
 });
+
+// eth_getTransactionReceipt
+// eth_getBlockByNumber
+// eth_sendTransaction
+
+// Transaction: 0x303129f8f89587b2e4ec795e57ac06f149370f47b36edbbf83afb46cc2200646
+// Gas usage: 129145
+// Block Number: 1001
+// Block Time: Thu Apr 30 2020 03: 21: 39 GMT + 0200(hora de verano de Europa central)
+
+// eth_getTransactionReceipt
+// eth_getBlockByNumber
+// eth_sendTransaction
+
+// Transaction: 0xcdd1b1b7ae76da725791bd907c4ce0e8b90c2aafe41b2fd7b6789295eb03a80a
+// Gas usage: 3053530
+// Block Number: 1002
+// Block Time: Thu Apr 30 2020 03: 21: 39 GMT + 0200(hora de verano de Europa central)
+
+
+// cuando se renueva cada matrix se cobra del usuario
+// el gas se cobra al ultimo en registrarse

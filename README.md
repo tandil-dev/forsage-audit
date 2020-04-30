@@ -21,21 +21,21 @@
 
  Fix Recommendation
 
+    //------ change this
+    } else if (x6.length == 1) {
+        if (x6[0] == referrerAddress) {
+            users[users[referrerAddress].x6Matrix[level].currentReferrer].x6Matrix[level].closedPart = referrerAddress;
+            }
+        }
+    }
     //------
-		    } else if (x6.length == 1) {
-		    	if (x6[0] == referrerAddress) {
-			    	users[users[referrerAddress].x6Matrix[level].currentReferrer].x6Matrix[level].closedPart = referrerAddress;
-		     		}
-		     	}
-		    }
-    //------
-    //++++++    
-		    } 
-	    } else  if (x6.length == 1) {
-			if (x6[0] == referrerAddress) {
-			   users[users[referrerAddress].x6Matrix[level].currentReferrer].x6Matrix[level].closedPart = referrerAddress;
-			    }
-		    }
+    //++++++ for this   
+        } 
+    } else  if (x6.length == 1) {
+        if (x6[0] == referrerAddress) {
+            users[users[referrerAddress].x6Matrix[level].currentReferrer].x6Matrix[level].closedPart = referrerAddress;
+            }
+        }
     //++++++
 
 
