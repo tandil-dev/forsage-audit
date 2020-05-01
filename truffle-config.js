@@ -62,8 +62,8 @@ module.exports = {
       port: 8555,
       gas: 0xfffffffffff,
       gasPrice: 0x01,
-      providerOptions: { accounts:20, total_accounts: 20} ,
-    },
+      
+      },
 
 
     // Another network with more advanced options...

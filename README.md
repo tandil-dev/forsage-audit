@@ -19,25 +19,24 @@
 
     updateX6ReferrerSecondLevel(address,address,uint8)[#335]
 
- Fix Recommendation
 
-    //------ change this
-    } else if (x6.length == 1) {
-        if (x6[0] == referrerAddress) {
-            users[users[referrerAddress].x6Matrix[level].currentReferrer].x6Matrix[level].closedPart = referrerAddress;
-            }
-        }
-    }
-    //------
-    //++++++ for this   
-        } 
-    } else  if (x6.length == 1) {
-        if (x6[0] == referrerAddress) {
-            users[users[referrerAddress].x6Matrix[level].currentReferrer].x6Matrix[level].closedPart = referrerAddress;
-            }
-        }
-    //++++++
+Description
+A statement indentation error was encountered. As a consequence a branch of logic that will never execute
 
+ Recommendation
+
+    //------ fix statement in [331-340]    
+    if (x6.length == 2) {    
+	    if (x6[0] == referrerAddress ||    
+		    x6[1] == referrerAddress) {		    users[users[referrerAddress].x6Matrix[level].currentReferrer].x6Matrix[level].closedPart = referrerAddress;
+			} // add this line to close the `if (x6.length == 2)` statement
+		} else if (x6.length == 1) {    
+		    if (x6[0] == referrerAddress) {    
+			    users[users[referrerAddress].x6Matrix[level].currentReferrer].x6Matrix[level].closedPart = referrerAddress;    
+		    }	    
+	    }    
+    } // delete this line that close the `if (x6.length == 2)` with `if (x6.length == 1)` statement inside
+    
 
 **2. Functions that send ether to arbitrary destinations**
 
