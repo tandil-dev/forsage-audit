@@ -7,7 +7,7 @@ install:
 - npm install -g truffle ganache-cli eth-gas-reporter
 - npm install
 script:
-  - ganache-cli -p 8545 > /dev/null &
+  - ganache-cli -p 8545 -e 200 --accounts 20 > /dev/null &
   - sleep 5
   - truffle test
   - truffle run coverage
