@@ -56,13 +56,13 @@ contract('SmartMatrixForsage', ([owner, alice, bob, max, jhon,...accounts]) => {
 
         it('New user registered successfully', async () => {
             
-            console.log(await web3.eth.getBalance(alice))
+            //console.log(await web3.eth.getBalance(alice))
             await smartMatrixForsage.registrationExt(owner, { from: alice, value: 50000000000000000 })
-            console.log(await web3.eth.getBalance(alice))
+            //console.log(await web3.eth.getBalance(alice))
 
             const userExists = await smartMatrixForsage.isUserExists(alice)
             assert.equal(userExists, true);
-            console.log(`alice: ${alice}`)
+            //console.log(`alice: ${alice}`)
 
             const isUserActiveX3Level = await smartMatrixForsage.usersActiveX3Levels(alice, 1)
             assert.equal(isUserActiveX3Level, true)
@@ -88,9 +88,6 @@ contract('SmartMatrixForsage', ([owner, alice, bob, max, jhon,...accounts]) => {
 
     })
 
-
-
-
     describe('Register New User referred by user', async () => {
         it('New user registered successfully', async () => {
             
@@ -98,7 +95,7 @@ contract('SmartMatrixForsage', ([owner, alice, bob, max, jhon,...accounts]) => {
 
             const userExists = await smartMatrixForsage.isUserExists(bob)
             assert.equal(userExists, true);
-            console.log(`bob: ${bob}`)
+            //console.log(`bob: ${bob}`)
 
             const isUserActiveX3Level = await smartMatrixForsage.usersActiveX3Levels(bob, 1)
             assert.equal(isUserActiveX3Level, true)
@@ -123,7 +120,7 @@ contract('SmartMatrixForsage', ([owner, alice, bob, max, jhon,...accounts]) => {
             await smartMatrixForsage.sendTransaction({ from: max, gasLimit: 6721975, to: address, value: web3.utils.toWei(amount, "ether") })
             const userExists = await smartMatrixForsage.isUserExists(max)
             assert.equal(userExists, true);
-            console.log(`max: ${max}`)
+            //console.log(`max: ${max}`)
 
             const isUserActiveX3Level = await smartMatrixForsage.usersActiveX3Levels(max, 1)
             assert.equal(isUserActiveX3Level, true)
@@ -149,7 +146,7 @@ contract('SmartMatrixForsage', ([owner, alice, bob, max, jhon,...accounts]) => {
 
             const userExists = await smartMatrixForsage.isUserExists(jhon)
             assert.equal(userExists, true);
-            console.log(`jhon: ${jhon}`)
+            //console.log(`jhon: ${jhon}`)
 
             const isUserActiveX3Level= await smartMatrixForsage.usersActiveX3Levels(jhon, 1)
             assert.equal(isUserActiveX3Level, true)

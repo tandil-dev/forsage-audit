@@ -39,6 +39,7 @@ contract('SmartMatrixForsage', ([owner, alice, bob, max, jhon,...accounts]) => {
         })
     })
 
+    
 
 });
 
@@ -60,17 +61,11 @@ contract('SmartMatrixForsage', ([owner, alice, bob, max, jhon,...accounts]) => {
 // Block Number: 1002
 // Block Time: Thu Apr 30 2020 03: 21: 39 GMT + 0200(hora de verano de Europa central)
 
-
-// cuando se renueva cada matrix se cobra del usuario
-// el gas se cobra al ultimo en registrarse
-
-
-/** Pruebas de mati
+/** console log de out of gas execution task 
  *  Transaction: 0x02ab9c3f9cb0b8dd52a7746d37929bbb771808ead6f6e9587a3f977d86039698
   Gas usage: 6721975
   Block Number: 10002
   Block Time: Wed Apr 29 2020 23:08:27 GMT-0300 (Argentina Standard Time)
   Runtime Error: out of gas
-
 
  */

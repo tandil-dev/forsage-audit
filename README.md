@@ -2,9 +2,19 @@
 
 ##  
 ## Summary
+**1. Test Coverage**
+
+![](https://github.com/tandil-dev/forsage_audit/blob/master/docs/images/coverage.png)
+
+**2. Eth/Gas Report**
+
+![](https://github.com/tandil-dev/forsage_audit/blob/master/docs/images/gasReporter.png)
+
+**3. Issues**
+
 |  Findings  |Confidence                          |Severity                     |
 |----------------|-------------------------------|-----------------------------|
-|`Logical error` | `Critical` | Critical            
+|`Logical error` | Critical | Critical            
 |`Functions that send ether to arbitrary destinations`|Medium | High |
 |`Local variable never initialized` | Medium| Medium            |
 |`Reentrancy vulnerabilities`| Medium | Informational|
@@ -21,21 +31,21 @@
 
 
 Description
-A statement indentation error was encountered. As a consequence a branch of logic that will never execute
+A statement indentation error was found. As a consequence a logic's branch will never execute
 
  Recommendation
 
-    //------ fix statement in [331-340]    
+    // [331-340]    
     if (x6.length == 2) {    
 	    if (x6[0] == referrerAddress ||    
 		    x6[1] == referrerAddress) {		    
-            users[users[referrerAddress].x6Matrix[level].currentReferrer].x6Matrix[level].closedPart = referrerAddress;
-			} // add this line to close the `if (x6.length == 2)` statement
-		} else if (x6.length == 1) {    
-		    if (x6[0] == referrerAddress) {    
-			    users[users[referrerAddress].x6Matrix[level].currentReferrer].x6Matrix[level].closedPart = referrerAddress;    
-		    }	    
-	    }    
+                users[users[referrerAddress].x6Matrix[level].currentReferrer].x6Matrix[level].closedPart = referrerAddress;
+        } // add this line to close the `if (x6.length == 2)` statement
+    } else if (x6.length == 1) {    
+        if (x6[0] == referrerAddress) {    
+        users[users[referrerAddress].x6Matrix[level].currentReferrer].x6Matrix[level].closedPart = referrerAddress;    
+        }	    
+    }    
     } // delete this line that close the `if (x6.length == 2)` with `if (x6.length == 1)` statement inside
     
 
@@ -262,6 +272,7 @@ public functions that are never called by the contract should be declared extern
 Recommendation
 
 Use the external attribute for functions never called from the contract.
+
 
 
 ##  
