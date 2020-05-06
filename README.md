@@ -4,11 +4,11 @@
 ## Summary
 **1. Test Coverage**
 
-![](https://github.com/tandil-dev/forsage_audit/blob/master/docs/images/coverage.png)
+![](/docs/images/coverage.png)
 
 **2. Eth/Gas Report**
 
-![](https://github.com/tandil-dev/forsage_audit/blob/master/docs/images/gasReporter.png)
+![](/docs/images/gasReporter.png)
 
 **3. Issues**
 
