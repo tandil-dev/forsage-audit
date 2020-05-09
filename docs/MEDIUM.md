@@ -7,11 +7,11 @@ Hace unos meses, más precisamente a principios del 2020, un grupo de personas c
 
 Se entiende que este tipo de "sistemas" son derivaciones más complejas y sofisticadas de los esquemas piramidales o "[Ponzi](https://es.wikipedia.org/wiki/Esquema_Ponzi)". Donde se proporciona ganancia a las personas por medio de la recomendación del sistema a otras personas. Las cuales tienen que hacer una contribución para ingresar al sistema. 
 
-Particularmente, el grupo de personas en cuestion organiza reuniones donde explican detalles técnicos de la tecnologia blockchain y adicionalmente explican las especificaciones del esquema que promocionan e introducen a las personas a participar. Esto llamó nuestra atención. 
+Particularmente, el grupo de personas en cuestion organiza reuniones donde explican detalles técnicos de la tecnologia blockchain y adicionalmente explican las especificaciones del esquema que promocionan e introducen a las personas a participar.
 
 Debido a nuestra activa participación en la comunidad en conjunto con personas comprometidas en la enseñanza de la tecnología desde mediados del 2017 para achicar la brecha de conocimiento, hemos sido consultados por un significativo número de personas respecto de la seguridad de este mecanismo.
 
-Se encontró el [contrato](https://etherscan.io/address/0x5acc84a3e955Bdd76467d3348077d003f00fFB97) publicado en la red Ethereum para ejecutar su sistema. Se decidió revisar el código del contrato inteligente para entender su comportamiento y desde el punto de vista técnico explicar porque no es seguro. La revisión se llevó a cabo de forma similar a como se ejecutaría una auditoria.
+Se encontró el [contrato](https://etherscan.io/address/0x5acc84a3e955Bdd76467d3348077d003f00fFB97) publicado en la red Ethereum para ejecutar su sistema. Se decidió revisar el código del contrato inteligente para entender su comportamiento y desde el punto de vista técnico explicar si es, o no es seguro. Además este trabajo será uttilizado de ejemplo para nuestros talleres. La revisión se llevó a cabo de forma similar a como se ejecutaría una auditoría.
 
 ### ¿Qué es una auditoría?
 La finalidad de una auditoría es verificar que el sistema funciona según lo previsto. Por lo que hemos revisado completamente la arquitectura y la base del código del sistema, y luego hemos escrito un informe que incluye comentarios procesables para cada problema encontrado.
@@ -332,5 +332,4 @@ A pesar de que la auditoría se encuentra en un estado avanzado, el proceso no f
 - desarrollo de test para verificar completamente los branch de ejecución y elevar los números de coverage
 - mejorar la documentación, principalmente agregando el resultado de los nuevos test sobre algunas secuencias de ejecución no evaluadas hasta el momento.
 
-Sin embargo, las iteraciones ejecutadas permiten resaltar las graves fallas del contrato inteligente que ejecuta este sistema.
-Finalmente, el costo en terminos de gas de la operación de registrar una nueva cuenta es proporcional a los niveles de profundidad de la estructura. Esto perjudica a los futuros referidos y limita al sistema.
+Sin embargo, las iteraciones ejecutadas permiten resaltar las graves fallas del contrato inteligente que ejecuta este sistema. Particularmente, el costo en terminos de gas de la operación de registrar una nueva cuenta es proporcional a los niveles de profundidad de la estructura. Esto perjudica a los futuros referidos y limita al sistema.
