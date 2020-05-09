@@ -1,8 +1,7 @@
 
 # Rvisión de seguridad
 
-## Importante
-
+## de contrato inteligente en Ethereum
 Hace unos meses, más precisamente a principios del 2020, un grupo de personas comenzaron a promocionar un sistema llamado "marketing matricial" haciendo uso de la tecnologia blockchain y contratos inteligentes.
 
 Se entiende que este tipo de "sistemas" son derivaciones más complejas y sofisticadas de los esquemas piramidales o "[Ponzi](https://es.wikipedia.org/wiki/Esquema_Ponzi)". Donde se proporciona ganancia a las personas por medio de la recomendación del sistema a otras personas. Las cuales tienen que hacer una contribución para ingresar al sistema. 
