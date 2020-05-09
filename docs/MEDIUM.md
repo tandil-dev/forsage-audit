@@ -1,22 +1,17 @@
 
-# Auditoría de seguridad
+# Rvisión de seguridad
 
-## Importante para alertar a la comunidad
+## Importante
 
-Hace unos meses, más precisamente a principios del 2020, un grupo de personas comenzaron a promocionar un sistema mal llamado de "marketing matricial" haciendo uso de la tecnologia blockchain y contratos inteligentes. 
+Hace unos meses, más precisamente a principios del 2020, un grupo de personas comenzaron a promocionar un sistema llamado "marketing matricial" haciendo uso de la tecnologia blockchain y contratos inteligentes.
 
-Se entiende que este tipo de "sistemas" son derivaciones más complejas y sofisticadas de las famosas estafas piramidales o "[esquemas Ponzi](https://es.wikipedia.org/wiki/Esquema_Ponzi)". Donde se proporciona ganancia a las personas por medio de la recomendación:
- del sistema a otras personas. Las cuales tienen que hacer una contribución para ingresar al sistema. Organizaciones populares de redes de marketing son conocidas y existen amplios informes de investigación y documentales que estudian su funcionamiento, por ejemplo [Betting on zero](https://es.wikipedia.org/wiki/Betting_on_Zero).
+Se entiende que este tipo de "sistemas" son derivaciones más complejas y sofisticadas de los esquemas piramidales o "[Ponzi](https://es.wikipedia.org/wiki/Esquema_Ponzi)". Donde se proporciona ganancia a las personas por medio de la recomendación del sistema a otras personas. Las cuales tienen que hacer una contribución para ingresar al sistema. 
 
-Particularmente, el grupo de personas en cuestion organiza reuniones donde explican algunas cuestiones tecnicas de la tecnologia blockchain y la mezclan con algunas especificaciones del esquema que promocionan e introducen a las personas lentamente a su sistema. 
+Particularmente, el grupo de personas en cuestion organiza reuniones donde explican detalles técnicos de la tecnologia blockchain y adicionalmente explican las especificaciones del esquema que promocionan e introducen a las personas a participar. Esto llamó nuestra atención. 
 
-Esto llamó nuestra atención, debido a nuestra activa participación en la comunidad en conjunto con personas comprometidas en la enseñanza de la tecnología hemos estado esforzandonos desde mediados del 2017 para achicar la brecha de conocimiento. Este grupo de personas entorpece nuestros esfuerzos y hemos sido consultados por un significativo número de personas respecto de la seguridad de estos mecanismos. Esto nos ah preocupado y empezamos a alertar a nuestros contactos, pues NO queremos que las personas sean engañadas con este tipo de sistemas. 
+Debido a nuestra activa participación en la comunidad en conjunto con personas comprometidas en la enseñanza de la tecnología desde mediados del 2017 para achicar la brecha de conocimiento, hemos sido consultados por un significativo número de personas respecto de la seguridad de este mecanismo.
 
-Se visitó el sitio Web del grupo [Forsage](https://forsage.io/) y encontramos el contrato publicado en la red Ethereum para ejecutar su sistema ([Forsage Smart Contract](https://etherscan.io/address/0x5acc84a3e955Bdd76467d3348077d003f00fFB97) ).
-
-En primera instancia la misma organización desplegó previamente varios contratos inteligentes con similar lógica, que actualmente se están ejecutando bajo organizaciones con diferentes nombres, por ejemplo [Smart Way Smart Contract](https://etherscan.io/address/0x64a0fe42e1295456246abbc51d8708472856170c).
-
-Luego de observar esto, se decidió revisar el código del contrato inteligente para entender su comportamiento y desde nuestro punto de vista explicar porque NO es una buena idea participar de esto. La revisión se llevó a cabo de forma similar a como se ejecutaría una auditoria. 
+Se encontró el [contrato](https://etherscan.io/address/0x5acc84a3e955Bdd76467d3348077d003f00fFB97) publicado en la red Ethereum para ejecutar su sistema. Se decidió revisar el código del contrato inteligente para entender su comportamiento y desde el punto de vista técnico explicar porque no es seguro. La revisión se llevó a cabo de forma similar a como se ejecutaría una auditoria.
 
 ### ¿Qué es una auditoría?
 La finalidad de una auditoría es verificar que el sistema funciona según lo previsto. Por lo que hemos revisado completamente la arquitectura y la base del código del sistema, y luego hemos escrito un informe que incluye comentarios procesables para cada problema encontrado.
@@ -52,7 +47,7 @@ De acuerdo a nuestra experiencia, hicimos un relevamiento del material necesario
 - Cuando las tablas se completan, se bloquean y deben ser desbloqueadas nuevamente;
 - Las cuentas referidas en un nivel inicial, en caso de desbloquear un nivel superior que el referente no tenga desbloqueado pasan a ser referidas por el referente superior inmediato desbloqueado en el nivel en cuestion;
 - De la misma forma, si el referente no tiene desbloqueada la tabla de un nivel, el recibo de una comision por un nuevo referido será asignado a un referente inmediato superior con la tabla de ese nivel desbloqueada;
-- La cuenta propietaria de la estructura es la raiz de referentes ..
+- La cuenta propietaria de la estructura es la raiz de referentes.
 
 **1. Cobertura de tests**
 
@@ -338,12 +333,4 @@ A pesar de que la auditoría se encuentra en un estado avanzado, el proceso no f
 - mejorar la documentación, principalmente agregando el resultado de los nuevos test sobre algunas secuencias de ejecución no evaluadas hasta el momento.
 
 Sin embargo, las iteraciones ejecutadas permiten resaltar las graves fallas del contrato inteligente que ejecuta este sistema.
-
-La examinación del código revela diferencias entre la descripción:
- general del esquema a la que se obtuvo acceso y el accionar implementado en el contrato inteligente.
-
-Independientemente de que el mismo ya está desplegado en la red principal, si esta auditoría se hubiese ejecutado en un momento anterior se recomendaría postergar esta acción hasta resolver los puntos de gravedad critico y altos destacados.
-
 Finalmente, el costo en terminos de gas de la operación de registrar una nueva cuenta es proporcional a los niveles de profundidad de la estructura. Esto perjudica a los futuros referidos y limita al sistema.
-
-Debido a todo lo mencionado, se recomiendo fuertemente no interactuar con el contrato, y no participar del esquema.
