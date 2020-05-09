@@ -8,9 +8,9 @@ Se entiende que este tipo de "sistemas" son derivaciones más complejas y sofist
 
 Particularmente, el grupo de personas en cuestion organiza reuniones donde explican detalles técnicos de la tecnologia blockchain y adicionalmente explican las especificaciones del esquema que promocionan e introducen a las personas a participar.
 
-Debido a nuestra activa participación en la comunidad en conjunto con personas comprometidas en la enseñanza de la tecnología desde mediados del 2017 para achicar la brecha de conocimiento, hemos sido consultados por un significativo número de personas respecto de la seguridad de este mecanismo.
+Debido a nuestra participación en la difusión  de la tecnología blockchain desde mediados del 2017 para achicar la brecha de conocimiento en la comunidad, hemos sido consultados por un significativo número de personas respecto de la seguridad de este último mecanismo descripto.
 
-Se encontró el [contrato](https://etherscan.io/address/0x5acc84a3e955Bdd76467d3348077d003f00fFB97) publicado en la red Ethereum para ejecutar su sistema. Se decidió revisar el código del contrato inteligente para entender su comportamiento y desde el punto de vista técnico explicar si es, o no es seguro. Además este trabajo será uttilizado de ejemplo para nuestros talleres. La revisión se llevó a cabo de forma similar a como se ejecutaría una auditoría.
+Se consiguió el [contrato](https://etherscan.io/address/0x5acc84a3e955Bdd76467d3348077d003f00fFB97) publicado en la red Ethereum para ejecutar su sistema. Se decidió revisar el código del contrato inteligente para entender su comportamiento y desde el punto de vista técnico explicar si es, o no es seguro. Además este trabajo será uttilizado de ejemplo para nuestros talleres. La revisión se llevó a cabo de forma similar a como se ejecutaría una auditoría.
 
 ### ¿Qué es una auditoría?
 La finalidad de una auditoría es verificar que el sistema funciona según lo previsto. Por lo que hemos revisado completamente la arquitectura y la base del código del sistema, y luego hemos escrito un informe que incluye comentarios procesables para cada problema encontrado.
