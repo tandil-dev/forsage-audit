@@ -87,6 +87,21 @@ De acuerdo a nuestra experiencia, hicimos un relevamiento del material necesario
 
     updateX6ReferrerSecondLevel(address,address,uint8)[#335]
 
+ Estructura de método original:
+
+    // [331-340]    
+    if (x6.length == 2) {    
+	    if (x6[0] == referrerAddress ||    
+		    x6[1] == referrerAddress) {		    
+                users[users[referrerAddress].x6Matrix[level].currentReferrer].x6Matrix[level].closedPart = referrerAddress;
+    } else if (x6.length == 1) {    
+        if (x6[0] == referrerAddress) {    
+        users[users[referrerAddress].x6Matrix[level].currentReferrer].x6Matrix[level].closedPart = referrerAddress;    
+        }	    
+    }    
+    }
+    
+
 
 Descripción:
 
@@ -114,6 +129,8 @@ Se encontró un error de identación. Como consecuencia, una rama de la lógica 
 |----|-----------|----------|
 |`Functions that send ether to arbitrary destinations`|Medio | Alto |
 
+Observación: Se cree que si falla el condicional, la sentencia interna también lo hará, pero como se ejecuta desde una address que no es un contrato la llamada puede considerarse como innecesaria.
+
 
     sendETHDividends(address,address,uint8,uint8) [#435]
 
@@ -122,9 +139,14 @@ Llamadas peligrosas:
     ! address(uint160(receiver)).send(levelPrice[level]) [#438]
       address(uint160(receiver)).transfer(address(this).balance) [#439]
 
+Estructura de método original:
+
+    if (!address(uint160(receiver)).send(levelPrice[level])) {
+                return address(uint160(receiver)).transfer(address(this).balance);
+            }
+
 
 Descripción:
-
 
 Llamada desprotegida a una función que ejecuta el envío de fondos a una dirección arbitraria.
 
@@ -149,9 +171,7 @@ Escenario de explotación:
 
 Recomendación:
 
-
 Asegúrarse de que un usuario arbitrario no pueda retirar fondos no autorizados.
-
 
 
 |    |Confianza  |Severidad |
@@ -193,6 +213,7 @@ Inicializar todas las variables. Si una variable está destinada a inicializarse
 |----|-----------|----------|
 |`Reentrancy vulnerabilities`| Medio | Informacional|
 
+Observación: A pesar de la posibilidad de un atque de reentrada, el caso de la extracción no se dará porque el contrato no almacena fondos.
 
 Reentradas en:
 
@@ -275,7 +296,7 @@ Descripción:
 
 Solidity define una convención de nomenclatura que debe seguirse.
 
-Rules exceptions
+Excepción
 
     Allow constant variables name/symbol/decimals to be lowercase (ERC20)
     
@@ -313,8 +334,8 @@ Utilice el atributo externo para funciones que nunca se invocan desde el contrat
 ## Conclusion
 
 A pesar de que la auditoría se encuentra en un estado avanzado, el proceso no fue terminado. Quedan pendientes en iteraciones futuras
-- desarrollo de más test para elevar los números de coverage
-- mejorar la documentación
+- desarrollo de test para verificar completamente los branch de ejecución y elevar los números de coverage
+- mejorar la documentación, principalmente agregando el resultado de los nuevos test sobre algunas secuencias de ejecución no evaluadas hasta el momento.
 
 Sin embargo, las iteraciones ejecutadas permiten resaltar las graves fallas del contrato inteligente que ejecuta este sistema.
 
